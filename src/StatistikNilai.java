@@ -67,6 +67,36 @@ public class StatistikNilai {
             if (n > rataRata) diAtasRata++;
         }
 
+        // 4: distribusi grade dengan int[5]
+        int[] jumlahGrade = new int[5]; //array 5 kotak, otomatis berisi 0 semua
+        for (int n : daftar) { //cek tiap nilai
+            if (n >= 90) jumlahGrade[0]++; //grade A -> kotak 0 naik 1
+            else if (n >= 80) jumlahGrade[1]++; //grade B -> kotak 1 (else if: hanya dicek kalau yang atas tidak cocok)
+            else if (n >= 70) jumlahGrade[2]++; //grade C -> kotak 2
+            else if (n >= 60) jumlahGrade[3]++; //grade D -> kotak 3
+            else jumlahGrade[4]++; //sisanya (di bawah 60) grade E -> kotak 4
+        }
+        String[] namaGrade = {"A", "B", "C", "D", "E"}; //nama grade, urutannya sama dengan index jumlahGrade
+        StringBuilder distribusi = new StringBuilder(); //wadah untuk menyambung teks sedikit demi sedikit
+        for (int i = 0; i < jumlahGrade.length; i++) { //loop dengan index i (0 sampai 4), pakai < bukan <=
+            if (i > 0) distribusi.append(" "); //spasi pemisah, kecuali sebelum grade pertama
+            distribusi.append(namaGrade[i]).append("=").append(jumlahGrade[i]); //hasilnya misal "A=1"
+        }
+
+
+        ArrayList<Integer> terurut = new ArrayList<>(daftar); //salinan daftar: list baru yang isinya sama
+        Collections.sort(terurut); //urutkan salinannya, daftar asli tidak ikut berubah
+
+        // ---------- Cetak hasil ----------
+        System.out.println("Nilai tersimpan : " + daftar); //list otomatis tercetak
+        System.out.println("Jumlah          : " + daftar.size()); //size() = banyaknya nilai sah
+        System.out.println("Rata-rata       : " + String.format(new Locale("id", "ID"), "%.2f", rataRata)); //%.2f = 2 angka desimal, Locale id = koma
+        System.out.println("Tertinggi       : " + tertinggi);
+        System.out.println("Terendah        : " + terendah);
+        System.out.println("Di atas rata2   : " + diAtasRata + " orang");
+        System.out.println("Distribusi      : " + distribusi); //misal A=1 B=1 C=1 D=0 E=1
+        System.out.println("Terurut         : " + terurut); //hasil sort dari salinan
+        System.out.println("Urutan asli     : " + daftar); // bukti daftar asli tidak berubah
         input.close();
     }
 }
